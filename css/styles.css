@@ -1,0 +1,77 @@
+/* urls
+https://devchallenges.io/challenges/mM1UIenRhK808W8qmLWv
+api
+https://openweathermap.org/
+iconos
+https://openweathermap.org/weather-conditions */
+
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap');
+:root{
+    --main-color: #100E1D;
+    --secondary-color: #1E213A;
+    --white-light: #E7E7EB;
+    --white: #fff;
+    --gray-light: #88869D;
+}
+.color-white{
+    color: var(--white);
+}
+.color-white-light{
+    color: var(--white-light);
+}
+.bg-main-color{
+    background-color: var(--main-color);
+    color: var(--white);
+}
+.bg-secondary-color{
+    background-color: var(--secondary-color);
+    color: var(--white);
+}
+.height-100{
+    min-height: 100vh;
+}
+.icon-weater img{
+    width: 40%;
+}
+.weather{
+    text-transform: capitalize;
+}
+.target{
+    font-family: 'Raleway', sans-serif;
+    /* text-transform: capitalize!important; */
+}
+
+.principal-weather-icon .material-icons{
+    font-size: 15em!important;
+    /* min-height: 50vh; */
+}
+
+.principal-weather-icon .fs-1 .number{
+    font-size: 2.5em!important;
+    font-weight: 500!important;
+}
+.principal-weather-icon .fs-1 .degrees{
+    font-size: 1.2em!important;
+    color: var(--white-light);
+}
+
+.principal-weather-icon .fs-2{
+    font-size: 1.5em!important;
+    color: var(--white-light);
+}
+
+.principal-weather-icon .fs-3{
+    font-size: .9em!important;
+    color: var(--white-light);
+    text-transform: none;
+}
+.container-status .w_status,
+.container-status .humidly,
+.container-status .visibility,
+.container-status .cloudiness{
+    font-size: 1.8em;
+    margin-right: 5px;
+}
+
+
