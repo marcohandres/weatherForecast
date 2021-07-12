@@ -39,6 +39,7 @@ https://openweathermap.org/weather-conditions */
 }
 .target{
     font-family: 'Raleway', sans-serif;
+    margin-top: 2rem;
     /* text-transform: capitalize!important; */
 }
 
@@ -75,3 +76,12 @@ https://openweathermap.org/weather-conditions */
 }
 
 
+
+@media(max-width:575px) {
+    .target{
+        margin-top: 2rem!important;
+    }
+    .target:last-child{
+        margin-bottom: 2rem!important;
+    }
+}

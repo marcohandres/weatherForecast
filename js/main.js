@@ -1,27 +1,69 @@
 (function () {
 
     //check if geolocation is available
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            let latitude = position.coords.latitude;
-            let longitude = position.coords.longitude;
-            getWeather(latitude, longitude);
-        })
+    if (!navigator.geolocation){
+        output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+        return;
+      }
+
+      function getCurrentPosition(){
+        navigator.geolocation.getCurrentPosition(success, error);
+        document.querySelector('.content-divs').innerHTML="";
+      }
+      navigator.geolocation.getCurrentPosition(success, error);
+
+    //function success
+    function success(position){
+        let latitude = position.coords.latitude;
+        let longitude = position.coords.longitude;
+        getWeather(latitude, longitude);
+        getUbication(latitude, longitude);
+    }
+    //function error
+    function error(){
+        let latitude = '19.35529';
+        let longitude = '-99.06224';
+        getWeather(latitude, longitude);
+        getUbication(latitude, longitude);
+      };
 
     //bringing data from the api with our location
-        function getWeather(latitude, longitude) {
-            let apikey = 'b57d87d1653ec55aba73f64493b3658e';
-            let lang = 'es';
+    function getWeather(latitude, longitude) {
+        let apikey = 'b57d87d1653ec55aba73f64493b3658e';
+        let lang = 'es';
 
-            let excude = 'minutely,hourly,alerts';
-            let units = 'metric';
-            let url = 'https://api.openweathermap.org/';
-            url += 'data/2.5/onecall?lat=' + latitude + '&lon=' + longitude +
-                '&exclude=' + excude + '&units=' + units + '&appid=' + apikey;
-            url += '&lang=' + lang;
-           setData(url)
-        }
+        let excude = 'minutely,hourly,alerts';
+        let units = 'metric';
+        let url = 'https://api.openweathermap.org/';
+        url += 'data/2.5/onecall?lat=' + latitude + '&lon=' + longitude +
+            '&exclude=' + excude + '&units=' + units + '&appid=' + apikey;
+        url += '&lang=' + lang;
+       setData(url);
     }
+    function getUbication(latitude, longitude){
+        let apikey = 'b57d87d1653ec55aba73f64493b3658e';
+        let lang = 'es';
+
+        let url = 'https://api.openweathermap.org/';
+        url += 'data/2.5/weather?lat=' + latitude + '&lon=' + longitude
+         + '&appid=' + apikey;
+        url += '&lang=' + lang;
+
+        fetch(url)
+         .then(response => response.json())
+         .then(json  => showUbication(json ))
+         .catch(error => console.log(error))
+
+        function showUbication(json ){
+            let ubication = json.name + ' ' + json.sys.country;
+            const PRINCIPALWEATHER = document.querySelector('.principal-weather-icon');
+            const P_UBICATION = PRINCIPALWEATHER.querySelector('.ubication');
+            P_UBICATION.innerHTML = ubication;
+        }
+         
+    }
+    
+    
 
     function setData(url){
          //request to the api
@@ -66,6 +108,7 @@
         return anotherDay;
     }
 
+    
     //painting the values in the DOM
     function showData(data, icon, temp, weather, today, ubication, windStatus,
         humidity, cloudiness, visibility) {
@@ -76,7 +119,7 @@
         const P_NUMBER = PRINCIPALWEATHER.querySelector('.number');
         const P_WEATHER = PRINCIPALWEATHER.querySelector('.weather');
         const P_DATE = PRINCIPALWEATHER.querySelector('.date');
-        const P_UBICATION = PRINCIPALWEATHER.querySelector('.ubication');
+        // const P_UBICATION = PRINCIPALWEATHER.querySelector('.ubication');
 
         const CONTAINERSTATUS = document.querySelector('.container-status');
         const P_STATUS = CONTAINERSTATUS.querySelector('.w_status');
@@ -86,13 +129,14 @@
         P_NUMBER.innerHTML = temp;
         P_WEATHER.innerHTML = weather;
         P_DATE.innerHTML = today;
-        P_UBICATION.innerHTML = ubication;
+        // P_UBICATION.innerHTML = ubication;
         P_STATUS.innerHTML = windStatus;
         P_HUMIDLY.innerHTML = humidity;
         P_VISIBILITY.innerHTML = visibility;
         P_CLOUDINESS.innerHTML = cloudiness;
 
         //divs to paint the weather for the next 5 days
+        
         for (i = 0; i <= 4; i++) {
             let div = document.createElement('div');
             //get the values of the days
@@ -123,6 +167,12 @@
             document.querySelector('.content-divs').appendChild(div);
         }
     }
+
+    const PRINCIPALWEATHER = document.querySelector('.principal-weather-icon');
+        const GETUBICATION = PRINCIPALWEATHER.querySelector('.get-ubication i');
+        // GETUBICATION.addEventListener("click", getCurrentPosition());
+        GETUBICATION.addEventListener("click", function (){getCurrentPosition()});
+
 
     
 })();
